@@ -234,7 +234,7 @@ export const GroupedPage04Programs: React.FC<GroupedPageProps> = ({ onSelectProg
         </div>
       </div>
 
-      <div className="pdf-photo-ribbon" style={{ marginTop: '5mm' }}>
+      <div className="pdf-photo-ribbon mt-6 lg:mt-7">
         <img src={userImgFegtSign} alt="Enseigne officielle FEGT" />
         <img src={campusCourtyardImg} alt="Patio étudiant" />
         <div>
@@ -243,17 +243,19 @@ export const GroupedPage04Programs: React.FC<GroupedPageProps> = ({ onSelectProg
         </div>
       </div>
 
-      <div className="pdf-language-strip" style={{ marginTop: '5mm' }}>
+      <div className="pdf-language-strip mt-5 lg:mt-6">
         <b>CAPSULES DES FILIÈRES DISPONIBLES EN :</b>
-        <span>العربية</span>
-        <span>Français</span>
-        <span>English</span>
-        <span>Tamazight</span>
+        <div>
+          <span>العربية</span>
+          <span>Français</span>
+          <span>English</span>
+          <span>Tamazight</span>
+        </div>
       </div>
 
-      <div className="pdf-footer">
+      <div className="pdf-footer mt-5 lg:mt-6">
         <span>FEGT · Université Ibn Zohr</span>
-        <span>Guide étudiant · 2026–2027 · Page 04</span>
+        <span>Guide étudiant · 2026–2027 · Page 04 / 14</span>
       </div>
     </div>
   </section>

@@ -92,24 +92,35 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-// Estimated reading time fallback per page in minutes
+// Estimated reading time fallback per page in minutes (Couverture + Mot de bienvenue + 20 Axes)
 const BASE_READING_MINUTES: Record<number, number> = {
-  1: 1,  // Couverture
-  2: 2,  // Mot de bienvenue
-  3: 3,  // Taroudant & FEGT
-  4: 3,  // Formations & Filières
-  5: 2.5,// Premiers pas & Accueil
-  6: 3,  // Services numériques
-  7: 3,  // Démarches & Réussite
-  8: 2,  // Besoins spécifiques
-  9: 3,  // Clubs & Projets
-  10: 3, // Événements & Culture
-  11: 3.5// International & Contacts
+  1: 1,   // Couverture
+  2: 2,   // Mot de bienvenue
+  3: 2.5, // 01 · Découvrir Taroudant
+  4: 2.5, // 02 · Ma Faculté (FEGT)
+  5: 3,   // 03 · Découvrir ma formation
+  6: 2.5, // 04 · Mes premiers pas
+  7: 2,   // 05 · Espace d'accueil & écoute
+  8: 3,   // 06 · Mes services numériques
+  9: 3,   // 07 · Mes démarches administratives
+  10: 2.5,// 08 · Accompagnement & Réussite
+  11: 2,  // 09 · Besoins spécifiques
+  12: 3,  // 10 · Les clubs étudiants
+  13: 2.5,// 11 · Proposer une activité
+  14: 2,  // 12 · La Semaine de l'étudiant
+  15: 3,  // 13 · Grands événements UIZ
+  16: 2.5,// 14 · Culture, Sport & Créativité
+  17: 2.5,// 15 · Stages & Employabilité
+  18: 2.5,// 16 · Mobilité internationale
+  19: 2,  // 17 · Newsletter semestrielle
+  20: 2.5,// 18 · Droits et devoirs
+  21: 3,  // 19 · Foire aux questions (FAQ)
+  22: 2   // 20 · Contacts & Liens utiles
 };
 
 export default function App() {
-  // Format mode: '11pages' (Official 11-page latest update 12.10) vs '14pages' (Standard grouped) vs '22pages' (Expanded 1 axe per page)
-  const [guideFormat, setGuideFormat] = useState<'11pages' | '14pages' | '22pages'>('11pages');
+  // Format mode: '22pages' (Chaque axe dans une seule page - par défaut) vs '11pages' (Mise à jour 12.10) vs '14pages' (Standard regroupé)
+  const [guideFormat, setGuideFormat] = useState<'22pages' | '11pages' | '14pages'>('22pages');
   // View mode: 'single' (Livre interactif / feuilletage - par défaut) vs 'all' (Défilement continu)
   const [viewMode, setViewMode] = useState<'single' | 'all'>('single');
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -613,58 +624,71 @@ export default function App() {
     <div className="pdf-viewer-root">
       {/* Top Floating Control Bar (Hidden on print) */}
       <header className="sticky top-0 z-50 bg-[#03594E] text-white shadow-lg border-b border-[#024138] print:hidden">
-        {/* DESKTOP HEADER (MD & UP): FULL RICH TOOLBAR PRESERVED */}
-        <div className="hidden md:block px-4 py-2.5">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+        {/* DESKTOP / LAPTOP HEADER (MD & UP): ELEGANT, COMPACT, NEVER WRAPS */}
+        <div className="hidden md:block px-3 lg:px-5 py-2">
+          <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-2 lg:gap-3">
             {/* Logo & Document Title */}
-            <div className="flex items-center gap-3">
-              <FEGTOfficialLogo variant="boxed" size="sm" className="!px-2 !py-1 !rounded-lg" />
-              <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-base sm:text-lg tracking-wide text-white">
-                  FEGT · Guide de la Vie de l’Étudiant
+            <div className="flex items-center gap-2 lg:gap-3 shrink-0">
+              <FEGTOfficialLogo variant="boxed" size="sm" className="!px-1.5 !py-0.5 !rounded-lg" />
+              <div className="flex items-center gap-1.5 lg:gap-2">
+                <span className="font-serif font-bold text-sm lg:text-base xl:text-lg tracking-wide text-white truncate max-w-[180px] lg:max-w-[260px] xl:max-w-none">
+                  FEGT · Guide Étudiant
                 </span>
-                <span className="text-[10px] font-mono bg-[#CD935A]/30 text-[#f5d5b1] px-2 py-0.5 rounded border border-[#CD935A]/40">
+                <span className="text-[10px] font-mono bg-[#CD935A]/30 text-[#f5d5b1] px-1.5 py-0.5 rounded border border-[#CD935A]/40 shrink-0">
                   2026–2027
                 </span>
               </div>
               {/* Reading position & section reading time remaining badges */}
-              <div className="hidden lg:flex items-center gap-2">
+              <div className="hidden xl:flex items-center gap-2">
                 <span 
-                  className="inline-flex items-center text-[10px] font-mono font-bold text-[#F8C62F] bg-black/25 px-2 py-0.5 rounded border border-white/10"
+                  className="inline-flex items-center text-[10px] font-mono font-bold text-[#F8C62F] bg-black/25 px-2 py-0.5 rounded border border-white/10 shrink-0"
                   title={`Page ${currentPage} sur ${totalPages} (${Math.round(activeProgress)}%)`}
                 >
-                  Page {currentPage < 10 ? `0${currentPage}` : currentPage} / {totalPages} · {Math.round(activeProgress)}%
+                  P. {currentPage < 10 ? `0${currentPage}` : currentPage}/{totalPages} · {Math.round(activeProgress)}%
                 </span>
                 <span 
-                  className="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-100 bg-black/25 px-2 py-0.5 rounded border border-emerald-500/30 transition-all select-none"
+                  className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-100 bg-black/25 px-2 py-0.5 rounded border border-emerald-500/30 transition-all select-none shrink-0"
                   title={`Temps de lecture estimé restant pour cette section (${currentSection?.title || ''}) : ${sectionReadingTimeRemaining}`}
                 >
                   <Clock className="w-3 h-3 text-[#F8C62F] shrink-0" />
-                  <span className="text-stone-300 font-sans hidden xl:inline">Section :</span>
+                  <span className="text-stone-300 font-sans hidden 2xl:inline">Section :</span>
                   <span className="text-[#F8C62F] font-bold">{sectionReadingTimeRemaining}</span>
-                  <span className="text-stone-400 font-sans hidden xl:inline">restant</span>
+                  <span className="text-stone-400 font-sans hidden 2xl:inline">restant</span>
                 </span>
               </div>
             </div>
 
             {/* Guide Format Switcher (Mise en page) */}
-            <div className="flex items-center gap-1 bg-[#024138] p-1 rounded-xl text-xs">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-stone-300 px-2 hidden lg:inline">
-                Mise en page :
+            <div className="flex items-center gap-1 bg-[#024138] p-1 rounded-xl text-xs shrink-0">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-stone-300 px-1.5 hidden xl:inline">
+                Format :
               </span>
+              <button
+                onClick={() => setGuideFormat('22pages')}
+                className={`px-2.5 lg:px-3 py-1 rounded-lg transition-all font-sans flex items-center gap-1.5 text-xs ${
+                  guideFormat === '22pages'
+                    ? 'bg-[#FE8235] text-white font-bold shadow'
+                    : 'text-stone-300 hover:text-white'
+                }`}
+                title="Chaque axe dans une seule page (22 Pages au total)"
+              >
+                <span>1 Axe / Page</span>
+                <span className="hidden xl:inline text-[10px] opacity-80">(22 P.)</span>
+                {guideFormat === '22pages' && <CheckCircle2 className="w-3.5 h-3.5" />}
+              </button>
               <button
                 onClick={() => {
                   setGuideFormat('11pages');
                   if (currentPage > 11) setCurrentPage(1);
                 }}
-                className={`px-3 py-1.5 rounded-lg transition-all font-sans flex items-center gap-1.5 ${
+                className={`px-2 lg:px-2.5 py-1 rounded-lg transition-all font-sans flex items-center gap-1 text-xs ${
                   guideFormat === '11pages'
                     ? 'bg-[#FE8235] text-white font-bold shadow'
                     : 'text-stone-300 hover:text-white'
                 }`}
-                title="11 Pages officielles - Dernière mise à jour 12.10"
+                title="11 Pages condensées (Édition 12.10)"
               >
-                <span>11 Pages (Mise à jour 12.10)</span>
+                <span>11 Pages</span>
                 {guideFormat === '11pages' && <CheckCircle2 className="w-3.5 h-3.5" />}
               </button>
               <button
@@ -672,36 +696,24 @@ export default function App() {
                   setGuideFormat('14pages');
                   if (currentPage > 14) setCurrentPage(1);
                 }}
-                className={`px-3 py-1.5 rounded-lg transition-all font-sans flex items-center gap-1.5 ${
+                className={`hidden xl:flex px-2 lg:px-2.5 py-1 rounded-lg transition-all font-sans items-center gap-1 text-xs ${
                   guideFormat === '14pages'
                     ? 'bg-[#FE8235] text-white font-bold shadow'
                     : 'text-stone-300 hover:text-white'
                 }`}
-                title="14 Pages officielles avec chaque titre d'axe distinct"
+                title="14 Pages officielles avec titres d'axes distincts"
               >
-                <span>14 Pages (PDF Regroupé)</span>
+                <span>14 Pages</span>
                 {guideFormat === '14pages' && <CheckCircle2 className="w-3.5 h-3.5" />}
-              </button>
-              <button
-                onClick={() => setGuideFormat('22pages')}
-                className={`px-3 py-1.5 rounded-lg transition-all font-sans flex items-center gap-1.5 ${
-                  guideFormat === '22pages'
-                    ? 'bg-[#FE8235] text-white font-bold shadow'
-                    : 'text-stone-300 hover:text-white'
-                }`}
-                title="22 Pages développées (1 page par axe)"
-              >
-                <span>22 Pages (1 Axe / Page)</span>
-                {guideFormat === '22pages' && <CheckCircle2 className="w-3.5 h-3.5" />}
               </button>
             </div>
 
             {/* Interactive Book & Page Controls */}
-            <div className="flex items-center gap-2 bg-[#024138] px-2 py-1 rounded-xl text-xs">
+            <div className="flex items-center gap-1.5 bg-[#024138] px-2 py-1 rounded-xl text-xs shrink-0">
               <div className="flex bg-black/20 p-0.5 rounded-lg">
                 <button
                   onClick={() => setViewMode('single')}
-                  className={`px-3 py-1 rounded-md transition-all font-sans flex items-center gap-1.5 ${
+                  className={`px-2.5 lg:px-3 py-1 rounded-md transition-all font-sans flex items-center gap-1.5 text-xs ${
                     viewMode === 'single'
                       ? 'bg-white text-[#03594E] font-bold shadow'
                       : 'text-stone-300 hover:text-white'
@@ -709,11 +721,11 @@ export default function App() {
                   title="Consulter sous forme de livre interactif avec feuilletage"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-[#FE8235]" />
-                  <span>Livre interactif</span>
+                  <span>Livre</span>
                 </button>
                 <button
                   onClick={() => setViewMode('all')}
-                  className={`px-2.5 py-1 rounded-md transition-all font-sans ${
+                  className={`px-2 lg:px-2.5 py-1 rounded-md transition-all font-sans text-xs ${
                     viewMode === 'all'
                       ? 'bg-white text-[#03594E] font-bold shadow'
                       : 'text-stone-300 hover:text-white'
@@ -725,40 +737,40 @@ export default function App() {
               </div>
 
               {viewMode === 'single' && (
-                <div className="flex items-center gap-1 border-l border-white/20 pl-2">
+                <div className="flex items-center gap-1 border-l border-white/20 pl-1.5">
                   <button
                     onClick={goToPrevPage}
                     disabled={currentPage <= 1}
                     className="p-1 rounded hover:bg-white/10 disabled:opacity-30"
                     title="Page précédente (flèche gauche ou clic)"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
                   <select
                     value={currentPage}
                     onChange={(e) => goToPage(Number(e.target.value))}
-                    className="bg-transparent text-white font-mono text-xs font-bold px-1 py-0.5 rounded border border-white/20 cursor-pointer"
+                    className="bg-transparent text-white font-mono text-[11px] font-bold px-1 py-0.5 rounded border border-white/20 cursor-pointer"
                   >
                     {currentTOC.map((item) => (
                       <option key={item.page} value={item.page} className="text-stone-900">
-                        Page {item.page < 10 ? `0${item.page}` : item.page}
+                        P. {item.page < 10 ? `0${item.page}` : item.page}
                       </option>
                     ))}
                   </select>
-                  <span className="text-stone-300 text-xs font-mono">/ {totalPages}</span>
+                  <span className="text-stone-300 text-[11px] font-mono">/ {totalPages}</span>
                   <button
                     onClick={goToNextPage}
                     disabled={currentPage >= totalPages}
                     className="p-1 rounded hover:bg-white/10 disabled:opacity-30"
                     title="Page suivante (flèche droite ou espace)"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
               )}
 
               {/* Zoom Controls */}
-              <div className="hidden xl:flex items-center gap-1 border-l border-white/20 pl-2 text-stone-300">
+              <div className="hidden 2xl:flex items-center gap-1 border-l border-white/20 pl-2 text-stone-300">
                 <button
                   onClick={() => setZoom((z) => Math.max(0.6, z - 0.1))}
                   className="p-1 hover:text-white rounded"
@@ -784,10 +796,11 @@ export default function App() {
             </div>
 
             {/* Actions: Enregistrer, Sommaire, Plein écran */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 lg:gap-2 shrink-0">
               <button
                 onClick={() => setIsTocOpen(true)}
-                className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5"
+                className="px-2 lg:px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5"
+                title="Ouvrir le sommaire détaillé"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#F8C62F]" />
                 <span className="hidden sm:inline">Sommaire</span>
@@ -795,18 +808,18 @@ export default function App() {
 
               <button
                 onClick={toggleFullscreen}
-                className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-all"
+                className="px-2 lg:px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-all"
                 title={isFullscreen ? "Quitter le plein écran" : "Passer en mode plein écran"}
               >
                 {isFullscreen ? (
                   <>
                     <Minimize2 className="w-3.5 h-3.5 text-[#F8C62F]" />
-                    <span className="hidden sm:inline">Réduire</span>
+                    <span className="hidden lg:inline">Réduire</span>
                   </>
                 ) : (
                   <>
                     <Maximize2 className="w-3.5 h-3.5 text-[#F8C62F]" />
-                    <span className="hidden sm:inline">Plein écran</span>
+                    <span className="hidden lg:inline">Plein écran</span>
                   </>
                 )}
               </button>
@@ -814,7 +827,7 @@ export default function App() {
               {/* Bouton ENREGISTRER SOUS FORME DE PDF */}
               <button
                 onClick={handleSaveGuide}
-                className="px-3.5 py-1.5 rounded-lg bg-[#FE8235] hover:bg-[#e47127] active:scale-95 text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition-all"
+                className="px-3 lg:px-3.5 py-1.5 rounded-lg bg-[#FE8235] hover:bg-[#e47127] active:scale-95 text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition-all shrink-0"
                 title="Enregistrer sous forme de PDF sur votre appareil"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -990,11 +1003,11 @@ export default function App() {
               <button
                 onClick={goToPrevPage}
                 disabled={currentPage <= 1}
-                className="hidden xl:flex absolute left-2 lg:left-0 z-30 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-[#03594E] shadow-2xl items-center justify-center transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none border border-stone-200 print:hidden"
+                className="hidden lg:flex absolute -left-4 xl:-left-6 2xl:-left-12 z-30 w-11 h-11 xl:w-12 xl:h-12 rounded-full bg-white/95 hover:bg-white text-[#03594E] shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none border border-stone-200 print:hidden"
                 aria-label="Feuilleter vers la page précédente"
                 title="Page précédente (flèche gauche)"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5 xl:w-6 xl:h-6" />
               </button>
 
               {/* Couverture / Reliure du Livre interactif */}
@@ -1059,11 +1072,11 @@ export default function App() {
               <button
                 onClick={goToNextPage}
                 disabled={currentPage >= totalPages}
-                className="hidden xl:flex absolute right-2 lg:right-0 z-30 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-[#03594E] shadow-2xl items-center justify-center transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none border border-stone-200 print:hidden"
+                className="hidden lg:flex absolute -right-4 xl:-right-6 2xl:-right-12 z-30 w-11 h-11 xl:w-12 xl:h-12 rounded-full bg-white/95 hover:bg-white text-[#03594E] shadow-xl items-center justify-center transition-all hover:scale-110 active:scale-95 disabled:opacity-20 disabled:pointer-events-none border border-stone-200 print:hidden"
                 aria-label="Feuilleter vers la page suivante"
                 title="Page suivante (flèche droite ou espace)"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5 xl:w-6 xl:h-6" />
               </button>
             </div>
 
@@ -1225,6 +1238,31 @@ export default function App() {
                 <div className="space-y-1.5">
                   <button
                     onClick={() => {
+                      setGuideFormat('22pages');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full p-3 rounded-xl text-left transition-all border flex items-center justify-between min-h-[48px] ${
+                      guideFormat === '22pages'
+                        ? 'bg-[#03594E]/10 border-[#03594E] text-[#03594E] font-bold'
+                        : 'bg-stone-50 border-stone-200 hover:bg-stone-100 text-stone-700'
+                    }`}
+                  >
+                    <div>
+                      <div className="text-xs font-bold flex items-center gap-1.5">
+                        <span>1 Axe / Page (22 Pages)</span>
+                        <span className="text-[9px] font-mono bg-[#FE8235] text-white px-1.5 py-0.2 rounded font-bold">
+                          Défaut
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-stone-500 font-normal mt-0.5">
+                        Chaque axe sur une seule page dédiée
+                      </p>
+                    </div>
+                    {guideFormat === '22pages' && <CheckCircle2 className="w-4 h-4 text-[#03594E] shrink-0" />}
+                  </button>
+
+                  <button
+                    onClick={() => {
                       setGuideFormat('11pages');
                       if (currentPage > 11) setCurrentPage(1);
                       setIsMobileMenuOpen(false);
@@ -1238,12 +1276,12 @@ export default function App() {
                     <div>
                       <div className="text-xs font-bold flex items-center gap-1.5">
                         <span>11 Pages (Mise à jour 12.10)</span>
-                        <span className="text-[9px] font-mono bg-[#FE8235] text-white px-1.5 py-0.2 rounded font-bold">
-                          Officiel
+                        <span className="text-[9px] font-mono bg-stone-500 text-white px-1.5 py-0.2 rounded font-bold">
+                          Condensé
                         </span>
                       </div>
                       <p className="text-[11px] text-stone-500 font-normal mt-0.5">
-                        Dernière mise à jour 12.10 du guide
+                        Édition synthétique avec axes combinés
                       </p>
                     </div>
                     {guideFormat === '11pages' && <CheckCircle2 className="w-4 h-4 text-[#03594E] shrink-0" />}
@@ -1268,26 +1306,6 @@ export default function App() {
                       </p>
                     </div>
                     {guideFormat === '14pages' && <CheckCircle2 className="w-4 h-4 text-[#03594E] shrink-0" />}
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setGuideFormat('22pages');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`w-full p-3 rounded-xl text-left transition-all border flex items-center justify-between min-h-[48px] ${
-                      guideFormat === '22pages'
-                        ? 'bg-[#03594E]/10 border-[#03594E] text-[#03594E] font-bold'
-                        : 'bg-stone-50 border-stone-200 hover:bg-stone-100 text-stone-700'
-                    }`}
-                  >
-                    <div>
-                      <div className="text-xs font-bold">22 Pages (1 Axe / Page)</div>
-                      <p className="text-[11px] text-stone-500 font-normal mt-0.5">
-                        Format détaillé complet
-                      </p>
-                    </div>
-                    {guideFormat === '22pages' && <CheckCircle2 className="w-4 h-4 text-[#03594E] shrink-0" />}
                   </button>
                 </div>
               </div>

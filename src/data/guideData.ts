@@ -464,4 +464,4 @@ export const TABLE_OF_CONTENTS_22 = [
   { page: 22, title: 'Contacts et liens utiles', subtitle: 'Gardez ce guide à portée de main', kicker: '20 · CONTACTS & LIENS' }
 ];
 
-export const TABLE_OF_CONTENTS = TABLE_OF_CONTENTS_11;
+export const TABLE_OF_CONTENTS = TABLE_OF_CONTENTS_22;

@@ -13,7 +13,9 @@ interface TableOfContentsDrawerProps {
 }
 
 const SECTION_EST_MINUTES: Record<number, number> = {
-  1: 1, 2: 2, 3: 3, 4: 3, 5: 2.5, 6: 3, 7: 3, 8: 2, 9: 3, 10: 3, 11: 3.5, 12: 2.5, 13: 3, 14: 2.5
+  1: 1, 2: 2, 3: 2.5, 4: 2.5, 5: 3, 6: 2.5, 7: 2, 8: 3, 9: 3, 10: 2.5,
+  11: 2, 12: 3, 13: 2.5, 14: 2, 15: 3, 16: 2.5, 17: 2.5, 18: 2.5, 19: 2, 20: 2.5,
+  21: 3, 22: 2
 };
 
 export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({

@@ -230,7 +230,7 @@ export const PDFPage05: React.FC<PDFPageProps> = ({ onSelectProgram }) => (
           <b>Consulter la fiche filière →</b>
         </div>
       </div>
-      <div className="pdf-photo-ribbon" style={{ marginTop: '7mm' }}>
+      <div className="pdf-photo-ribbon mt-6 lg:mt-7">
         <img src={userImgFegtSign} alt="Enseigne FEGT" />
         <img src={campusCourtyardImg} alt="Patio étudiant" />
         <div>
@@ -238,16 +238,18 @@ export const PDFPage05: React.FC<PDFPageProps> = ({ onSelectProgram }) => (
           <span>Formation · échange · ouverture professionnelle</span>
         </div>
       </div>
-      <div className="pdf-language-strip" style={{ marginTop: '7mm' }}>
+      <div className="pdf-language-strip mt-5 lg:mt-6">
         <b>CAPSULES DES FILIÈRES DISPONIBLES EN :</b>
-        <span>العربية</span>
-        <span>Français</span>
-        <span>English</span>
-        <span>Tamazight</span>
+        <div>
+          <span>العربية</span>
+          <span>Français</span>
+          <span>English</span>
+          <span>Tamazight</span>
+        </div>
       </div>
-      <div className="pdf-footer">
+      <div className="pdf-footer mt-5 lg:mt-6">
         <span>FEGT · Université Ibn Zohr</span>
-        <span>Guide étudiant · 2026–2027</span>
+        <span>Guide étudiant · 2026–2027 · Page 05 / 22</span>
       </div>
     </div>
   </section>

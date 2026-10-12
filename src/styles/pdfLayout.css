@@ -22,7 +22,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1120px;
+  max-width: 1240px;
   position: relative;
   padding: 10px 16px;
 }
@@ -39,7 +39,7 @@
     inset 0 -3px 6px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(254, 130, 53, 0.25);
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
-  max-width: 1060px;
+  max-width: 1180px;
   width: 100%;
 }
 
@@ -203,7 +203,7 @@
   color: #1E293B;
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-  padding: 24px 0 60px 0;
+  padding: 16px 0 48px 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -213,7 +213,7 @@
    ========================================================================= */
 .pdf-page {
   width: 100%;
-  max-width: 1040px;
+  max-width: 1140px;
   min-height: auto;
   position: relative;
   background: #FFFFFF;
@@ -230,11 +230,53 @@
 }
 
 .pdf-inner {
-  padding: 2.75rem 3.25rem 2.5rem;
+  padding: 2.25rem 2.5rem 2rem;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+/* LAPTOP VIEWPORT OPTIMIZATIONS (1024px to 1400px):
+   Adapts book width, internal paddings, and card gaps to fit standard laptop screens comfortably without excessive scrolling */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .interactive-book-stage {
+    max-width: 1080px;
+    padding: 6px 14px;
+  }
+  .interactive-book-cover {
+    max-width: 1040px;
+    padding: 8px;
+    border-radius: 1.5rem;
+  }
+  .interactive-book-cover .pdf-page {
+    border-radius: 1.15rem;
+  }
+  .pdf-inner {
+    padding: 1.75rem 2rem 1.75rem;
+  }
+  .pdf-title {
+    font-size: clamp(1.45rem, 2.5vw, 1.85rem);
+  }
+  .pdf-top {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+  }
+  .pdf-page p {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0 0 10px;
+  }
+  .pdf-split,
+  .pdf-compact-split,
+  .pdf-feature-grid,
+  .pdf-two-cards {
+    gap: 1.15rem;
+  }
+  .pdf-compact-card,
+  .pdf-card {
+    padding: 1.1rem 1.25rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -367,9 +409,9 @@
 
 .pdf-title {
   font-size: clamp(1.6rem, 3.2vw, 2.25rem);
-  line-height: 1.15;
+  line-height: 1.2;
   margin: 6px 0 0;
-  max-width: 720px;
+  max-width: 960px;
   color: #03594E;
   font-weight: 600;
 }
@@ -861,17 +903,27 @@
    PAGE 04 — FILIÈRES (PROGRAMMES)
    ========================================================================= */
 .pdf-intro {
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   color: #03594E;
   margin-bottom: 1.5rem;
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 500;
+  max-width: 100%;
 }
 
 .pdf-program-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
+  width: 100%;
+  align-items: stretch;
+}
+
+@media (max-width: 1023px) {
+  .pdf-program-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+  }
 }
 
 @media (max-width: 640px) {
@@ -882,79 +934,110 @@
 }
 
 .pdf-program {
-  padding: 1.5rem 1.25rem;
+  padding: 1.5rem 1.35rem 1.4rem;
   background: #03594E;
   color: white;
-  border-radius: 1rem;
+  border-radius: 1.15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 190px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 220px;
+  height: 100%;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 12px rgba(3, 89, 78, 0.12);
+  box-sizing: border-box;
 }
 
 .pdf-program:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px -4px rgba(3, 89, 78, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -4px rgba(3, 89, 78, 0.35);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .pdf-program.rust {
   background: #FE8235;
+  box-shadow: 0 4px 12px rgba(254, 130, 53, 0.15);
 }
 
 .pdf-program.rust:hover {
-  box-shadow: 0 8px 24px -4px rgba(254, 130, 53, 0.3);
+  box-shadow: 0 12px 28px -4px rgba(254, 130, 53, 0.38);
 }
 
 .pdf-program.ochre {
   background: #C8944E;
   color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(200, 148, 78, 0.15);
+}
+
+.pdf-program.ochre:hover {
+  box-shadow: 0 12px 28px -4px rgba(200, 148, 78, 0.38);
 }
 
 .pdf-program.dark {
   background: #1E293B;
+  box-shadow: 0 4px 12px rgba(30, 41, 59, 0.15);
+}
+
+.pdf-program.dark:hover {
+  box-shadow: 0 12px 28px -4px rgba(30, 41, 59, 0.38);
 }
 
 .pdf-program span {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 0.9;
+  font-weight: 700;
+  display: block;
+  white-space: nowrap;
 }
 
 .pdf-program h3 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
   color: inherit;
-  margin: 0.5rem 0 0.25rem;
+  margin: 0.6rem 0 0.35rem;
+  line-height: 1;
 }
 
 .pdf-program p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 13px;
-  line-height: 1.4;
-  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13.5px;
+  line-height: 1.48;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
 }
 
 .pdf-program b {
-  font-size: 11px;
-  letter-spacing: 0.5px;
+  font-size: 11.5px;
+  letter-spacing: 0.4px;
   color: #FDE68A;
   display: inline-flex;
   align-items: center;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: auto;
+  transition: transform 0.2s ease;
+}
+
+.pdf-program:hover b {
+  transform: translateX(3px);
 }
 
 .pdf-photo-ribbon {
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1.25fr;
-  border-radius: 1rem;
+  grid-template-columns: 1fr 1fr 1.35fr;
+  border-radius: 1.15rem;
   overflow: hidden;
   border: 1px solid #E2E8F0;
   background: #F8FAFC;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
 @media (max-width: 768px) {
@@ -992,29 +1075,44 @@
 
 .pdf-language-strip {
   margin-top: 1.25rem;
-  padding: 12px 18px;
-  background: #F1F5F9;
-  border-radius: 0.75rem;
+  padding: 14px 22px;
+  background: #F8FAFC;
+  border-radius: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 12px 16px;
   align-items: center;
   font-size: 13px;
   border: 1px solid #E2E8F0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .pdf-language-strip b {
   color: #03594E;
   font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+}
+
+.pdf-language-strip > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pdf-language-strip span {
   background: #FFFFFF;
-  padding: 4px 12px;
-  border-radius: 6px;
+  padding: 5px 14px;
+  border-radius: 8px;
   border: 1px solid #CBD5E1;
   font-weight: 600;
-  color: #334155;
+  color: #1E293B;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-size: 12.5px;
 }
 
 /* =========================================================================
@@ -1783,7 +1881,7 @@
 }
 
 /* =========================================================================
-   PROTECTIONS MOBILES GLOBALES (320px - 768px)
+   PROTECTIONS & OPTIMISATIONS MOBILES GLOBALES (320px - 768px)
    ========================================================================= */
 html, body {
   overflow-x: hidden;
@@ -1801,7 +1899,23 @@ html, body {
     overflow-x: hidden;
   }
 
-  /* Accessible touch targets */
+  /* Interactive book stage & cover on mobile: full width, edge-to-edge reading comfort */
+  .interactive-book-stage {
+    padding: 2px 2px 12px 2px !important;
+    perspective: none !important;
+  }
+
+  .interactive-book-cover {
+    padding: 3px !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .interactive-book-cover .pdf-page {
+    border-radius: 0.875rem !important;
+  }
+
+  /* Accessible touch targets & tap response */
   button, 
   [role="button"],
   select,
@@ -1810,9 +1924,145 @@ html, body {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Safe area padding */
+  /* Safe area padding to prevent bottom bar from overlapping content */
   .pdf-viewer-root {
-    padding-bottom: max(5rem, calc(4rem + env(safe-area-inset-bottom, 0px)));
+    padding-bottom: max(6rem, calc(5rem + env(safe-area-inset-bottom, 0px)));
+  }
+
+  /* Mobile tables and columns comfort */
+  .pdf-event-table,
+  .pdf-faq-grid,
+  .pdf-service-grid,
+  .pdf-program-grid {
+    gap: 8px !important;
+  }
+
+  .pdf-card,
+  .pdf-compact-card {
+    padding: 1rem 0.95rem !important;
+    border-radius: 0.875rem !important;
+  }
+
+  /* Fix photo heights on mobile so they don't dominate screen height */
+  .pdf-photo-card {
+    height: 180px !important;
+    min-height: 160px !important;
+  }
+
+  .pdf-photo-card img {
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .pdf-photo-card b {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .interactive-book-stage {
+    padding: 0px 0px 8px 0px !important;
+  }
+
+  .interactive-book-cover {
+    padding: 0px !important;
+    border-radius: 0.85rem !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .interactive-book-cover .pdf-page {
+    border-radius: 0.75rem !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .pdf-inner {
+    padding: 1.15rem 0.85rem 1.25rem !important;
+  }
+
+  .pdf-top {
+    margin-bottom: 0.85rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .pdf-title {
+    font-size: clamp(1.22rem, 5.2vw, 1.55rem) !important;
+    line-height: 1.2 !important;
+  }
+
+  .pdf-page p {
+    font-size: 13.5px !important;
+    line-height: 1.58 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .pdf-kicker {
+    font-size: 9.5px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .pdf-program {
+    padding: 1.15rem 1rem !important;
+    min-height: auto !important;
+    border-radius: 0.95rem !important;
+  }
+
+  .pdf-program span {
+    font-size: 9.5px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .pdf-program h3 {
+    font-size: 1.55rem !important;
+    margin: 0.35rem 0 0.2rem !important;
+  }
+
+  .pdf-program p {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .pdf-program b {
+    font-size: 11px !important;
+    padding-top: 0.4rem !important;
+  }
+
+  .pdf-photo-ribbon {
+    margin-top: 1.25rem !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .pdf-photo-ribbon img {
+    height: 120px !important;
+  }
+
+  .pdf-photo-ribbon div {
+    padding: 1rem 1.15rem !important;
+  }
+
+  .pdf-language-strip {
+    margin-top: 1rem !important;
+    padding: 10px 14px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .pdf-language-strip > div {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  /* Make footer snug */
+  .pdf-footer {
+    margin-top: 1rem !important;
+    padding-top: 0.5rem !important;
+    font-size: 10px !important;
   }
 }
 
