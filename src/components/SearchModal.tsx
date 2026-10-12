@@ -104,49 +104,51 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-3 sm:pt-20 p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-stone-200 flex flex-col"
+        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-stone-200 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search input header */}
-        <div className="p-4 border-b border-stone-200 flex items-center gap-3 bg-stone-50">
-          <Search className="w-5 h-5 text-[#FE8235]" />
+        <div className="p-3 sm:p-4 border-b border-stone-200 flex items-center gap-2 sm:gap-3 bg-stone-50">
+          <Search className="w-5 h-5 text-[#FE8235] shrink-0" />
           <input
             autoFocus
             type="text"
             placeholder="Rechercher une filière, bourse, démarche, club, contact..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 bg-transparent text-sm focus:outline-none text-[#1F2432] placeholder-stone-400"
+            className="flex-1 bg-transparent text-base sm:text-sm focus:outline-none text-[#1F2432] placeholder-stone-400 py-1"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-stone-400 hover:text-stone-600 p-1"
+              className="text-stone-400 hover:text-stone-600 p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg"
+              aria-label="Effacer la recherche"
             >
               <X className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={onClose}
-            className="text-xs font-mono px-2 py-1 bg-stone-200 hover:bg-stone-300 rounded text-stone-700 font-semibold"
+            className="min-w-[44px] min-h-[40px] flex items-center justify-center text-xs font-mono px-3 py-1 bg-stone-200 hover:bg-stone-300 rounded-lg text-stone-700 font-semibold"
+            aria-label="Fermer la recherche"
           >
-            ESC
+            Fermer
           </button>
         </div>
 
         {/* Results */}
-        <div className="max-h-96 overflow-y-auto p-4 space-y-2">
+        <div className="max-h-[65vh] sm:max-h-96 overflow-y-auto p-3 sm:p-4 space-y-2 overscroll-contain">
           {query.trim() === '' ? (
             <div className="text-center py-6 text-stone-400 text-xs">
-              <p>Tapez un mot-clé pour chercher dans les 14 planches du guide.</p>
-              <div className="flex flex-wrap justify-center gap-2 mt-3 text-[11px]">
+              <p>Tapez un mot-clé pour chercher dans les planches du guide.</p>
+              <div className="flex flex-wrap justify-center gap-2 mt-3 text-xs">
                 {['Minhati', 'GEMD', 'Emploi du temps', 'Certificat', 'ENACTUS', 'Erasmus+'].map((tag) => (
                   <button
                     key={tag}
                     onClick={() => setQuery(tag)}
-                    className="px-2.5 py-1 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200"
+                    className="px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-200 min-h-[36px] flex items-center"
                   >
                     {tag}
                   </button>
@@ -165,7 +167,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   onNavigateToPage(res.page);
                   onClose();
                 }}
-                className="p-3 rounded-xl hover:bg-[#03594E]/5 cursor-pointer border border-stone-100 hover:border-[#03594E]/30 transition-all flex items-center justify-between"
+                className="p-3 rounded-xl hover:bg-[#03594E]/5 cursor-pointer border border-stone-100 hover:border-[#03594E]/30 transition-all flex items-center justify-between min-h-[52px]"
               >
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">

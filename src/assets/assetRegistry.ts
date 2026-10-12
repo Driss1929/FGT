@@ -5,9 +5,11 @@ import userImgRampartsTowers from './uploaded/img_31_3.avif';
 import userImgFegtSign from './uploaded/img_28.avif';
 import userImgFegtFacade from './uploaded/img_27.avif';
 
-// Contextual sport and campus images
-import studentsSportImg from './images/students_sport_1791812253702.jpg';
+// Contextual campus images
+import campusWalkwayImg from './images/campus_walkway_palms_1791812988649.jpg';
 import campusCourtyardImg from './images/campus_courtyard_1791812308837.jpg';
+// Alias for backward compatibility without basketball photo
+const studentsSportImg = campusWalkwayImg;
 // Official FEGT logo provided by user
 import officialFegtLogoImg from './images/fegt_official_user_logo.png';
 import officialFegtLogoTransparentImg from './images/fegt_official_user_logo_transparent.png';
@@ -23,6 +25,7 @@ export {
   userImgRampartsTowers,
   userImgFegtSign,
   userImgFegtFacade,
+  campusWalkwayImg,
   studentsSportImg,
   campusCourtyardImg,
   officialFegtLogoImg,

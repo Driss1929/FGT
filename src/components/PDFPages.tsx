@@ -5,7 +5,7 @@ import {
   userImgRampartsTowers,
   userImgFegtSign,
   userImgFegtFacade,
-  studentsSportImg,
+  campusWalkwayImg,
   campusCourtyardImg
 } from '../assets/assetRegistry';
 import { FEGTOfficialLogo, FEGTQrCode } from './OfficialLogo';
@@ -33,9 +33,11 @@ export const PDFPage01: React.FC = () => (
         La vie étudiante<br />
         <i>commence ici.</i>
       </h1>
-      <p className="pdf-cover-lead">S’informer · S’orienter · Participer · Réussir</p>
+      <p className="pdf-cover-lead">
+        <span>S’informer</span> <span className="pdf-cover-sep">·</span> <span>S’orienter</span> <span className="pdf-cover-sep">·</span> <span>Participer</span> <span className="pdf-cover-sep">·</span> <span>Réussir</span>
+      </p>
       <p className="pdf-cover-small">
-        Édition 2026–2027 · Faculté d’Économie et de Gestion de Taroudant
+        <span className="pdf-cover-edition">Édition 2026–2027</span> <span className="pdf-cover-sep">·</span> <span className="pdf-cover-faculty">Faculté d’Économie et de Gestion de Taroudant</span>
       </p>
     </div>
     <div className="pdf-cover-footer">
@@ -591,7 +593,7 @@ export const PDFPage12: React.FC = () => (
       </p>
       <div className="pdf-photo-strip">
         <img src={userImgFegtFacade} alt="Campus FEGT" />
-        <img src={studentsSportImg} alt="Sports basketball campus" />
+        <img src={campusWalkwayImg} alt="Allée arborée du campus FEGT" />
         <div>
           <b>Participer, c’est aussi apprendre autrement.</b>
           <span>Des rencontres, des projets concrets et des moments partagés.</span>
@@ -697,7 +699,7 @@ export const PDFPage14: React.FC = () => (
       <div className="pdf-split">
         <div>
           <div className="pdf-number-hero">12</div>
-          <img className="pdf-small-photo" src={studentsSportImg} alt="Talents étudiants en action" />
+          <img className="pdf-small-photo" src={campusWalkwayImg} alt="Vie de campus et talents étudiants" />
           <div className="pdf-caption">
             Sport, culture et représentation : les talents étudiants trouvent leur scène.
           </div>

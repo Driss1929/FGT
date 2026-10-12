@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, BookOpen, ChevronRight, Check } from 'lucide-react';
+import { X, BookOpen, ChevronRight, Check, Clock } from 'lucide-react';
 import { TABLE_OF_CONTENTS } from '../data/guideData';
 import { FEGTOfficialLogo } from './OfficialLogo';
 
@@ -9,14 +9,20 @@ interface TableOfContentsDrawerProps {
   onClose: () => void;
   onSelectPage: (page: number) => void;
   tocItems?: typeof TABLE_OF_CONTENTS;
+  currentSectionRemaining?: string;
 }
+
+const SECTION_EST_MINUTES: Record<number, number> = {
+  1: 1, 2: 2, 3: 3, 4: 3, 5: 2.5, 6: 3, 7: 3, 8: 2, 9: 3, 10: 3, 11: 3.5, 12: 2.5, 13: 3, 14: 2.5
+};
 
 export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({
   isOpen,
   currentPage,
   onClose,
   onSelectPage,
-  tocItems = TABLE_OF_CONTENTS
+  tocItems = TABLE_OF_CONTENTS,
+  currentSectionRemaining
 }) => {
   if (!isOpen) return null;
 
@@ -27,30 +33,32 @@ export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#03594E] text-white p-5 flex items-center justify-between">
+        <div className="bg-[#03594E] text-white px-4 py-4 sm:p-5 flex items-center justify-between pt-[max(1rem,env(safe-area-inset-top,0px))]">
           <div className="flex items-center gap-2.5">
-            <BookOpen className="w-5 h-5 text-[#F8C62F]" />
+            <BookOpen className="w-5 h-5 text-[#F8C62F] shrink-0" />
             <div>
-              <h2 className="font-serif font-bold text-lg leading-tight">
+              <h2 className="font-serif font-bold text-base sm:text-lg leading-tight">
                 Sommaire du Guide
               </h2>
-              <span className="text-xs text-stone-300 font-mono">
+              <span className="text-[11px] sm:text-xs text-stone-300 font-mono">
                 {tocItems.length} planches · Année 2026–2027
               </span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+            aria-label="Fermer le sommaire"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* List of pages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-1.5">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-1.5 overscroll-contain">
           {tocItems.map((item) => {
             const isCurrent = currentPage === item.page;
+            const estMin = SECTION_EST_MINUTES[item.page] || 2;
             return (
               <div
                 key={item.page}
@@ -58,15 +66,15 @@ export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({
                   onSelectPage(item.page);
                   onClose();
                 }}
-                className={`p-3 rounded-xl cursor-pointer transition-all flex items-center justify-between ${
+                className={`p-3 rounded-xl cursor-pointer transition-all flex items-center justify-between min-h-[52px] ${
                   isCurrent
                     ? 'bg-[#03594E]/10 border-2 border-[#03594E] text-[#03594E]'
-                    : 'hover:bg-stone-100 text-stone-800 border border-transparent'
+                    : 'hover:bg-stone-100 text-stone-800 border border-transparent active:bg-stone-200'
                 }`}
               >
                 <div className="flex items-start gap-3">
                   <span
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 ${
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 mt-0.5 ${
                       isCurrent
                         ? 'bg-[#03594E] text-white'
                         : 'bg-stone-200 text-stone-700'
@@ -84,6 +92,19 @@ export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({
                     <p className="text-xs text-stone-500 line-clamp-1">
                       {item.subtitle}
                     </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      {isCurrent ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-[#03594E] bg-white/80 px-2 py-0.5 rounded border border-[#03594E]/20">
+                          <Clock className="w-2.5 h-2.5 text-[#FE8235]" />
+                          {currentSectionRemaining ? `${currentSectionRemaining} restant` : `~${estMin} min`}
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono text-stone-400">
+                          <Clock className="w-2.5 h-2.5 text-stone-400" />
+                          ~{estMin} min de lecture
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -100,7 +121,7 @@ export const TableOfContentsDrawer: React.FC<TableOfContentsDrawerProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-stone-50 border-t border-stone-200 text-center flex flex-col items-center">
+        <div className="p-4 bg-stone-50 border-t border-stone-200 text-center flex flex-col items-center pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
           <FEGTOfficialLogo variant="boxed" size="sm" className="mb-2 !px-2.5 !py-1" />
           <p className="text-xs text-stone-600 font-serif">
             Faculté d’Économie et de Gestion de Taroudant

@@ -5,7 +5,7 @@ import {
   userImgRampartsTowers,
   userImgFegtSign,
   userImgFegtFacade,
-  studentsSportImg,
+  campusWalkwayImg,
   campusCourtyardImg
 } from '../assets/assetRegistry';
 import { FEGTOfficialLogo, FEGTQrCode } from './OfficialLogo';
@@ -37,9 +37,11 @@ export const GroupedPage01Cover: React.FC = () => (
         La vie étudiante<br />
         <i>commence ici.</i>
       </h1>
-      <p className="pdf-cover-lead">S’informer · S’orienter · Participer · Réussir</p>
+      <p className="pdf-cover-lead">
+        <span>S’informer</span> <span className="pdf-cover-sep">·</span> <span>S’orienter</span> <span className="pdf-cover-sep">·</span> <span>Participer</span> <span className="pdf-cover-sep">·</span> <span>Réussir</span>
+      </p>
       <p className="pdf-cover-small">
-        Édition 2026–2027 · Faculté d’Économie et de Gestion de Taroudant
+        <span className="pdf-cover-edition">Édition 2026–2027</span> <span className="pdf-cover-sep">·</span> <span className="pdf-cover-faculty">Faculté d’Économie et de Gestion de Taroudant</span>
       </p>
     </div>
     <div className="pdf-cover-footer">
@@ -715,10 +717,10 @@ export const GroupedPage10SemaineEvenementsUIZ: React.FC = () => (
             </p>
           </div>
           <div className="pdf-photo-card" style={{ height: '42mm' }}>
-            <img src={studentsSportImg} alt="Sports et talents étudiants" />
+            <img src={campusWalkwayImg} alt="Campus FEGT et vie étudiante" />
             <div>
               <b>Talents en action</b>
-              <span>Sport, culture, éloquence et création</span>
+              <span>Vie de campus, culture, éloquence et création</span>
             </div>
           </div>
         </div>

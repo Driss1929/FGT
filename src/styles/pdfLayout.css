@@ -12,6 +12,191 @@
   box-sizing: border-box;
 }
 
+/* =========================================================================
+   MODE LIVRE INTERACTIF (FEUILLETAGE DE LIVRE RÉALISTE 3D)
+   ========================================================================= */
+.interactive-book-stage {
+  perspective: 2400px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1120px;
+  position: relative;
+  padding: 10px 16px;
+}
+
+.interactive-book-cover {
+  position: relative;
+  background: #023831;
+  border-radius: 1.75rem;
+  padding: 10px;
+  box-shadow: 
+    0 25px 60px -12px rgba(2, 40, 35, 0.45),
+    0 15px 30px -10px rgba(0, 0, 0, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(254, 130, 53, 0.25);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  max-width: 1060px;
+  width: 100%;
+}
+
+/* Spine effect on the left */
+.interactive-book-cover::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  width: 18px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 60%, transparent);
+  border-top-left-radius: 1.25rem;
+  border-bottom-left-radius: 1.25rem;
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* Gutter shadow down the central spine */
+.interactive-book-spine-line {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(254, 130, 53, 0.3) 20%, rgba(254, 130, 53, 0.3) 80%, transparent);
+  z-index: 16;
+  pointer-events: none;
+}
+
+/* Animated book page transition */
+.interactive-book-page {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.interactive-book-page.turn-next {
+  animation: bookPageTurnNext 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.interactive-book-page.turn-prev {
+  animation: bookPageTurnPrev 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes bookPageTurnNext {
+  0% {
+    transform: rotateY(14deg) scale(0.985);
+    opacity: 0.7;
+    filter: brightness(0.95);
+  }
+  50% {
+    filter: brightness(1.02);
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes bookPageTurnPrev {
+  0% {
+    transform: rotateY(-14deg) scale(0.985);
+    opacity: 0.7;
+    filter: brightness(0.95);
+  }
+  50% {
+    filter: brightness(1.02);
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+/* Interactive ribbon bookmark hanging from top */
+.book-ribbon-marker {
+  position: absolute;
+  top: -6px;
+  right: 48px;
+  width: 26px;
+  height: 48px;
+  background: linear-gradient(135deg, #FE8235, #E06015);
+  box-shadow: 0 4px 10px rgba(254, 130, 53, 0.4);
+  z-index: 25;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  transition: transform 0.2s ease;
+}
+.book-ribbon-marker:hover {
+  transform: translateY(4px);
+}
+
+/* Dog-ear corner fold hover clue */
+.book-page-curl {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, transparent 50%, rgba(226, 232, 240, 0.8) 50%, #ffffff 70%, #CBD5E1 100%);
+  border-top-left-radius: 6px;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.25s ease;
+}
+.book-page-curl:hover {
+  width: 58px;
+  height: 58px;
+  box-shadow: -4px -4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.book-page-curl-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(-135deg, transparent 50%, rgba(226, 232, 240, 0.8) 50%, #ffffff 70%, #CBD5E1 100%);
+  border-top-right-radius: 6px;
+  box-shadow: 2px -2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.25s ease;
+}
+.book-page-curl-left:hover {
+  width: 58px;
+  height: 58px;
+  box-shadow: 4px -4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* In book view, eliminate unnecessary margins on the active page */
+.interactive-book-cover .pdf-page {
+  margin: 0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-radius: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .interactive-book-stage {
+    padding: 4px 4px;
+  }
+  .interactive-book-cover {
+    padding: 4px;
+    border-radius: 1.15rem;
+  }
+  .interactive-book-cover .pdf-page {
+    border-radius: 0.95rem;
+  }
+  .interactive-book-cover::before {
+    display: none;
+  }
+}
+
 /* Base Root Container */
 .pdf-viewer-root {
   background: #F8FAFC;
@@ -54,14 +239,82 @@
 
 @media (max-width: 768px) {
   .pdf-viewer-root {
-    padding: 12px 12px 48px 12px;
+    padding: 12px 10px 84px 10px;
   }
   .pdf-page {
     border-radius: 1.25rem;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .pdf-inner {
-    padding: 1.5rem 1.25rem 1.75rem;
+    padding: 1.5rem 1.15rem 1.75rem;
+  }
+  .pdf-top {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+  }
+  .pdf-title {
+    font-size: clamp(1.4rem, 4.2vw, 1.95rem);
+  }
+  .pdf-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 11.5px;
+    margin-top: 1.5rem;
+    padding-top: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pdf-viewer-root {
+    padding: 8px 8px 88px 8px;
+  }
+  .pdf-page {
+    border-radius: 1rem;
+    margin-bottom: 16px;
+  }
+  .pdf-inner {
+    padding: 1.25rem 0.85rem 1.25rem;
+  }
+  .pdf-title {
+    font-size: clamp(1.25rem, 5.5vw, 1.65rem);
+    line-height: 1.2;
+  }
+  .pdf-kicker {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+  .pdf-pageno {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+  .pdf-compact-card,
+  .pdf-card {
+    padding: 1rem 0.9rem;
+    border-radius: 0.875rem;
+  }
+  .pdf-page p {
+    font-size: 13.5px;
+    line-height: 1.62;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .pdf-viewer-root {
+    padding: 6px 6px 92px 6px;
+  }
+  .pdf-inner {
+    padding: 1rem 0.7rem 1rem;
+  }
+  .pdf-page {
+    border-radius: 0.875rem;
+    margin-bottom: 12px;
+  }
+  .pdf-title {
+    font-size: 1.2rem;
   }
 }
 
@@ -210,6 +463,22 @@
   line-height: 1.35;
   margin: 0;
   font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .pdf-axe-header-distinct {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .pdf-axe-header-distinct > div {
+    width: 100%;
+  }
+  .pdf-axe-title-distinct {
+    font-size: 1.02rem;
+    line-height: 1.3;
+  }
 }
 
 .pdf-axe-title-distinct b {
@@ -389,11 +658,43 @@
 }
 
 .pdf-cover h1 {
-  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
-  line-height: 1.02;
+  font-size: clamp(1.85rem, 5.5vw, 4.25rem);
+  line-height: 1.05;
   letter-spacing: -0.02em;
   margin: 1.25rem 0 1rem;
   color: #FFFFFF;
+}
+
+@media (max-width: 480px) {
+  .pdf-cover {
+    min-height: 440px;
+    padding: 1.5rem 1rem;
+  }
+  .pdf-cover-kicker {
+    margin-top: 1rem;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .pdf-cover h1 {
+    font-size: clamp(1.75rem, 7vw, 2.35rem);
+    line-height: 1.08;
+    margin: 0.85rem 0 0.75rem;
+  }
+  .pdf-cover-lead {
+    font-size: 1.05rem;
+    margin-bottom: 0.85rem;
+  }
+  .pdf-cover-small {
+    font-size: 12.5px;
+    line-height: 1.5;
+    padding-left: 0.75rem;
+  }
+  .pdf-cover-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 11.5px;
+  }
 }
 
 .pdf-cover h1 i {
@@ -402,17 +703,50 @@
 }
 
 .pdf-cover-lead {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  color: #FDE68A;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  color: #CD935A !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.pdf-cover-lead .pdf-cover-sep {
+  color: #FE8235;
+  margin: 0 0.35rem;
   font-weight: 400;
-  margin-bottom: 1.5rem;
+  display: inline-block;
 }
 
 .pdf-cover-small {
-  color: #E2E8F0;
+  color: #D1FAE5;
   font-size: 14px;
-  line-height: 1.5;
-  max-width: 460px;
+  line-height: 1.55;
+  max-width: 480px;
+  border-left: 3px solid #FE8235;
+  padding-left: 0.85rem;
+  background: rgba(2, 65, 56, 0.35);
+  border-radius: 0 6px 6px 0;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.pdf-cover-edition {
+  color: #F8C62F !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.pdf-cover-small .pdf-cover-sep {
+  color: #FE8235;
+  margin: 0 0.35rem;
+  display: inline-block;
+}
+
+.pdf-cover-faculty {
+  color: #A7F3D0;
+  font-weight: 500;
 }
 
 .pdf-cover-footer {
@@ -482,6 +816,13 @@
   border: 1px solid #E2E8F0;
 }
 
+@media (max-width: 640px) {
+  .pdf-photo-card {
+    min-height: 160px;
+    height: 190px !important;
+  }
+}
+
 .pdf-photo-card img {
   width: 100%;
   height: 100%;
@@ -531,6 +872,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .pdf-program-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 .pdf-program {
@@ -707,7 +1055,7 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   font-weight: 700;
-  shrink: 0;
+  flex-shrink: 0;
 }
 
 .pdf-timeline span {
@@ -715,6 +1063,18 @@
   color: #1E293B;
   font-size: 14px;
   font-weight: 500;
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .pdf-timeline div {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+  .pdf-timeline span {
+    font-size: 13px;
+    line-height: 1.4;
+  }
 }
 
 /* =========================================================================
@@ -724,6 +1084,19 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .pdf-service-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+  .pdf-service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .pdf-service-grid > div {
@@ -801,6 +1174,13 @@
   gap: 12px;
 }
 
+@media (max-width: 640px) {
+  .pdf-access-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
 .pdf-access-card {
   background: #F8FAFC;
   padding: 14px 18px;
@@ -848,6 +1228,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .pdf-club-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .pdf-club-grid div {
@@ -906,6 +1293,19 @@
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .pdf-proposal {
+    padding: 12px 14px;
+  }
+  .pdf-proposal-flow {
+    gap: 6px;
+    font-size: 11px;
+  }
+  .pdf-proposal-flow span {
+    padding: 3px 8px;
+  }
 }
 
 .pdf-proposal-flow span {
@@ -1141,9 +1541,25 @@
 
 .pdf-contact-title {
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 3rem;
+  font-size: clamp(2.2rem, 6vw, 3rem);
   color: #F8C62F;
   line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .pdf-contact-main {
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+  }
+  .pdf-contact-side {
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+  }
+  .pdf-closing {
+    font-size: clamp(1.25rem, 5vw, 1.85rem);
+    padding: 1rem 0.5rem 0;
+    margin-top: 1.25rem;
+  }
 }
 
 .pdf-contact-side {
@@ -1228,10 +1644,58 @@
   margin-top: 0 !important;
 }
 
+@media (max-width: 768px) {
+  .sheets-mode .pdf-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 auto 20px auto !important;
+  }
+  .sheets-mode .pdf-inner {
+    padding: 1.25rem 0.85rem 1.5rem !important;
+    height: auto !important;
+  }
+  .sheets-mode .pdf-page p {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+  .sheets-mode .pdf-title {
+    font-size: clamp(1.25rem, 5vw, 1.65rem) !important;
+  }
+  .sheets-mode .pdf-footer {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-top: 1.5rem !important;
+  }
+}
+
 /* =========================================================================
    OPTIMISATIONS IMPRESSION / EXPORT PDF A4 OFFICIEL
    ========================================================================= */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
 @media print {
+  /* Masquer tous les éléments de navigation, barres, menus et boutons */
+  header,
+  nav,
+  .print\:hidden,
+  button,
+  .interactive-book-spine-line,
+  .book-ribbon-marker,
+  .book-page-curl,
+  .book-page-curl-left,
+  .interactive-book-stage > button {
+    display: none !important;
+  }
+
   body {
     background: #FFFFFF !important;
     color: #1F2432 !important;
@@ -1244,6 +1708,33 @@
   .pdf-viewer-root {
     background: #FFFFFF !important;
     padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .interactive-book-stage {
+    perspective: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .interactive-book-cover {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    margin: 0 !important;
+  }
+
+  .interactive-book-cover::before {
+    display: none !important;
+  }
+
+  .interactive-book-page {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
   }
 
   .pdf-page {
@@ -1268,24 +1759,67 @@
   }
 
   .pdf-inner {
-    padding: 15mm 16mm 14mm !important;
+    padding: 14mm 15mm 12mm !important;
     height: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .pdf-page p {
     font-size: 10px !important;
     line-height: 1.4 !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 5px !important;
   }
 
   .pdf-title {
-    font-size: 24px !important;
+    font-size: 22px !important;
   }
 
   .pdf-footer {
     position: absolute !important;
-    left: 16mm !important;
-    right: 16mm !important;
+    left: 15mm !important;
+    right: 15mm !important;
     bottom: 8mm !important;
   }
+}
+
+/* =========================================================================
+   PROTECTIONS MOBILES GLOBALES (320px - 768px)
+   ========================================================================= */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll under all circumstances */
+  .pdf-viewer-root,
+  .pdf-page,
+  .pdf-inner {
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  /* Accessible touch targets */
+  button, 
+  [role="button"],
+  select,
+  a {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Safe area padding */
+  .pdf-viewer-root {
+    padding-bottom: max(5rem, calc(4rem + env(safe-area-inset-bottom, 0px)));
+  }
+}
+
+/* Typographie arabe pour capsules et libellés multilingues */
+[lang="ar"],
+.arabic-text {
+  font-family: 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+  direction: rtl;
+  display: inline-block;
 }

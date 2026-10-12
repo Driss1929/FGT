@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  Printer,
-  Search,
+  Download,
   BookOpen,
   LayoutGrid,
   ChevronLeft,
   ChevronRight,
-  Maximize2,
   ZoomIn,
-  ZoomOut,
-  Sparkles,
-  FileDown
+  ZoomOut
 } from 'lucide-react';
 import { TABLE_OF_CONTENTS } from '../data/guideData';
 
@@ -22,9 +18,8 @@ interface TopToolbarProps {
   onPageChange: (page: number) => void;
   onToggleViewMode: (mode: 'a4' | 'scroll') => void;
   onZoomChange: (newZoom: number) => void;
-  onOpenSearch: () => void;
   onOpenToc: () => void;
-  onPrint: () => void;
+  onSave?: () => void;
 }
 
 export const TopToolbar: React.FC<TopToolbarProps> = ({
@@ -35,9 +30,8 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
   onPageChange,
   onToggleViewMode,
   onZoomChange,
-  onOpenSearch,
   onOpenToc,
-  onPrint
+  onSave
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-[#03594E] text-white border-b border-[#024138] shadow-md px-3 sm:px-6 py-2.5 print:hidden">
@@ -62,7 +56,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
           </div>
         </div>
 
-        {/* Center: Page Controls (for A4 mode) & View Switcher */}
+        {/* Center: Page Controls (for interactive book mode) & View Switcher */}
         <div className="flex items-center gap-2 bg-[#024138] p-1 rounded-xl border border-white/10 text-xs">
           {/* View mode toggle */}
           <div className="flex bg-black/20 p-0.5 rounded-lg">
@@ -73,10 +67,10 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
                   ? 'bg-white text-[#03594E] font-bold shadow-sm'
                   : 'text-stone-300 hover:text-white'
               }`}
-              title="Affichage page par page format A4"
+              title="Livre interactif (page par page)"
             >
               <LayoutGrid className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Mode A4</span>
+              <span className="hidden md:inline">Livre interactif</span>
             </button>
             <button
               onClick={() => onToggleViewMode('scroll')}
@@ -88,11 +82,11 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
               title="Défilement continu de tout le guide"
             >
               <BookOpen className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Défilement continu</span>
+              <span className="hidden md:inline">Défilement</span>
             </button>
           </div>
 
-          {/* Page Navigation when in A4 mode */}
+          {/* Page Navigation when in book mode */}
           {viewMode === 'a4' && (
             <div className="flex items-center gap-1 border-l border-white/10 pl-2">
               <button
@@ -129,7 +123,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             </div>
           )}
 
-          {/* Zoom controls for A4 */}
+          {/* Zoom controls */}
           {viewMode === 'a4' && (
             <div className="hidden lg:flex items-center gap-1 border-l border-white/10 pl-2 text-stone-300">
               <button
@@ -158,7 +152,7 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
           )}
         </div>
 
-        {/* Right Actions: Sommaire, Search, Print */}
+        {/* Right Actions: Sommaire, Enregistrer */}
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenToc}
@@ -169,23 +163,16 @@ export const TopToolbar: React.FC<TopToolbarProps> = ({
             <span className="hidden sm:inline">Sommaire</span>
           </button>
 
-          <button
-            onClick={onOpenSearch}
-            className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
-            title="Rechercher dans le guide"
-          >
-            <Search className="w-3.5 h-3.5 text-[#FE8235]" />
-            <span className="hidden sm:inline">Recherche</span>
-          </button>
-
-          <button
-            onClick={onPrint}
-            className="px-3 py-1.5 rounded-lg bg-[#FE8235] hover:bg-[#e67026] text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-            title="Imprimer ou enregistrer au format PDF (A4)"
-          >
-            <Printer className="w-3.5 h-3.5" />
-            <span>Imprimer / PDF</span>
-          </button>
+          {onSave && (
+            <button
+              onClick={onSave}
+              className="px-3.5 py-1.5 rounded-lg bg-[#FE8235] hover:bg-[#e47127] active:scale-95 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+              title="Enregistrer le guide sur votre appareil"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Enregistrer</span>
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -126,7 +126,7 @@ export const Page01Cover: React.FC = () => {
             S’informer · S’orienter · Participer · Réussir
           </p>
           <p className="text-xs font-sans text-emerald-100/90 max-w-md leading-relaxed border-l-2 border-[#FE8235] pl-3.5">
-            Édition officielle 2026–2027 · Faculté d’Économie et de Gestion de Taroudant. Un guide complet pour trouver ses repères, enrichir son parcours académique et s’engager dans la vie du campus.
+            <span className="text-[#F8C62F] font-bold">Édition officielle 2026–2027</span> · Faculté d’Économie et de Gestion de Taroudant. Un guide complet pour trouver ses repères, enrichir son parcours académique et s’engager dans la vie du campus.
           </p>
         </div>
 

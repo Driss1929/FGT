@@ -407,7 +407,7 @@ export const StudentsSportArt: React.FC<{ className?: string; height?: string }>
         <path d="M-50,220 Q150,120 350,260 T700,180 L700,350 L-50,350 Z" fill="#03594E" opacity="0.9" />
         <path d="M-50,250 Q200,160 400,280 T700,220 L700,350 L-50,350 Z" fill="#023b34" />
 
-        {/* Sport silhouettes: Runner, Football player, Basketball */}
+        {/* Sport silhouettes: Runner, Champion, Orator */}
         {/* Athlete 1 - Runner */}
         <g fill="#FFFFFF" opacity="0.95" transform="translate(120, 70)">
           <circle cx="40" cy="25" r="9" />
@@ -416,12 +416,14 @@ export const StudentsSportArt: React.FC<{ className?: string; height?: string }>
           <path d="M30,45 L15,58 L18,65 L32,52 Z" />
         </g>
 
-        {/* Athlete 2 - Ball player */}
-        <g fill="#F8C62F" opacity="0.95" transform="translate(320, 60)">
+        {/* Athlete 2 - Victorious athlete / Champion with arms raised */}
+        <g fill="#F8C62F" opacity="0.95" transform="translate(320, 55)">
           <circle cx="50" cy="20" r="9" />
-          <path d="M45,34 L55,34 L65,80 L52,80 L48,58 L32,82 L20,78 L40,45 Z" />
-          {/* Ball */}
-          <circle cx="95" cy="35" r="14" fill="#FFFFFF" stroke="#03594E" strokeWidth="2" />
+          {/* Raised celebratory arms */}
+          <path d="M25,25 L45,35 L40,45 L20,35 Z" />
+          <path d="M75,25 L55,35 L60,45 L80,35 Z" />
+          {/* Body and legs */}
+          <path d="M42,34 L58,34 L62,80 L50,80 L48,58 L42,80 L32,80 L38,45 Z" />
         </g>
 
         {/* Oratory / Podium Speaker Silhouette (Culture / UIZ Éloquence) */}

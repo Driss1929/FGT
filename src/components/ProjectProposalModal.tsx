@@ -34,20 +34,21 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#03594E] p-6 text-white relative">
+        <div className="bg-[#03594E] p-4 sm:p-6 text-white relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+            aria-label="Fermer"
           >
             <X className="w-5 h-5" />
           </button>
           
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#F8C62F]">
-            <Sparkles className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#F8C62F] pr-10">
+            <Sparkles className="w-4 h-4 shrink-0" />
             <span>Vie Associative · Espace Initiatives Étudiantes</span>
           </div>
           
-          <h2 className="text-2xl font-serif font-bold mt-1 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-serif font-bold mt-1 tracking-tight pr-10">
             Proposer une activité ou un projet
           </h2>
           <p className="text-xs font-sans text-stone-200 mt-1">
@@ -56,7 +57,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
         </div>
 
         {/* Form Body */}
-        <div className="p-6 overflow-y-auto space-y-4 text-[#1F2432]">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 text-[#1F2432]">
           {submitted ? (
             <div className="text-center py-8 space-y-4">
               <div className="w-16 h-16 rounded-full bg-emerald-100 text-[#03594E] mx-auto flex items-center justify-center">
@@ -76,7 +77,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                   setSubmitted(false);
                   onClose();
                 }}
-                className="mt-4 px-6 py-2.5 bg-[#03594E] text-white text-xs font-bold rounded-xl hover:bg-[#024138] transition-colors"
+                className="mt-4 min-h-[44px] px-6 py-2.5 bg-[#03594E] text-white text-xs font-bold rounded-xl hover:bg-[#024138] transition-colors"
               >
                 Retourner au guide
               </button>
@@ -93,11 +94,11 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                   placeholder="Ex : Forum de l’Entrepreneuriat Vert à Taroudant"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                  className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-mono font-bold uppercase text-stone-700 mb-1">
                     Club porteur *
@@ -105,7 +106,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                   <select
                     value={formData.club}
                     onChange={(e) => setFormData({ ...formData, club: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                   >
                     <option value="ENACTUS">ENACTUS FEGT</option>
                     <option value="HULT PRIZE">HULT PRIZE</option>
@@ -124,12 +125,12 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                     type="date"
                     value={formData.datePrevue}
                     onChange={(e) => setFormData({ ...formData, datePrevue: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-mono font-bold uppercase text-stone-700 mb-1">
                     Nom & Prénom du porteur *
@@ -140,7 +141,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                     placeholder="Votre nom complet"
                     value={formData.responsable}
                     onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                   />
                 </div>
 
@@ -154,7 +155,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                     placeholder="etudiant@uiz.ac.ma"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                    className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                   />
                 </div>
               </div>
@@ -169,7 +170,7 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                   placeholder="Décrivez l'impact attendu, le public cible (étudiants, lycéens, communauté) et le déroulement..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                  className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
                 />
               </div>
 
@@ -182,26 +183,26 @@ export const ProjectProposalModal: React.FC<ProjectProposalModalProps> = ({ isOp
                   placeholder="Ex : Amphithéâtre A + micro HF"
                   value={formData.besoins}
                   onChange={(e) => setFormData({ ...formData, besoins: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E]"
+                  className="w-full px-3.5 py-2.5 text-base sm:text-xs rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#03594E] min-h-[44px]"
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-between border-t border-stone-200">
+              <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-stone-200">
                 <span className="text-[11px] text-stone-500 flex items-center gap-1">
-                  <FileText className="w-3.5 h-3.5 text-[#FE8235]" />
+                  <FileText className="w-3.5 h-3.5 text-[#FE8235] shrink-0" />
                   Validation sous 48h ouvrées
                 </span>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 rounded-xl"
+                    className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 rounded-xl transition-colors"
                   >
                     Annuler
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#03594E] hover:bg-[#024138] rounded-xl flex items-center gap-1.5 shadow-sm"
+                    className="flex-1 sm:flex-initial min-h-[44px] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#03594E] hover:bg-[#024138] rounded-xl flex items-center justify-center gap-1.5 shadow-sm transition-colors"
                   >
                     <Send className="w-3.5 h-3.5" />
                     Soumettre l’idée

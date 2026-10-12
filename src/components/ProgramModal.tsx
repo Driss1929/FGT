@@ -18,32 +18,32 @@ export const ProgramModal: React.FC<ProgramModalProps> = ({ program, onClose }) 
       >
         {/* Header */}
         <div
-          className="p-6 text-white relative"
+          className="p-4 sm:p-6 text-white relative"
           style={{ backgroundColor: program.color }}
         >
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-black/20 hover:bg-black/40 text-white transition-colors"
             aria-label="Fermer"
           >
             <X className="w-5 h-5" />
           </button>
           
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider opacity-85">
-            <GraduationCap className="w-4 h-4" />
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider opacity-85 pr-10">
+            <GraduationCap className="w-4 h-4 shrink-0" />
             <span>{program.cycle} {program.number ? `· ${program.number}` : ''}</span>
           </div>
           
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-1 tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-serif font-bold mt-1 tracking-tight pr-10">
             {program.code} — {program.name}
           </h2>
-          <p className="text-sm font-sans opacity-90 mt-1">
+          <p className="text-xs sm:text-sm font-sans opacity-90 mt-1">
             {program.fullName}
           </p>
         </div>
 
         {/* Content body */}
-        <div className="p-6 overflow-y-auto space-y-6 text-[#1F2432]">
+        <div className="p-4 sm:p-6 overflow-y-auto space-y-4 sm:space-y-6 text-[#1F2432]">
           <div>
             <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#FE8235] mb-2 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4" />
@@ -114,7 +114,7 @@ export const ProgramModal: React.FC<ProgramModalProps> = ({ program, onClose }) 
         <div className="p-4 bg-stone-100 border-t border-stone-200 flex justify-end">
           <button
             onClick={onClose}
-            className="px-5 py-2 text-xs font-bold uppercase tracking-wider text-stone-700 bg-white border border-stone-300 rounded-lg hover:bg-stone-50 transition-colors shadow-sm"
+            className="min-h-[44px] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-stone-700 bg-white border border-stone-300 rounded-xl hover:bg-stone-50 transition-colors shadow-sm"
           >
             Fermer
           </button>
